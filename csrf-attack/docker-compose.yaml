@@ -1,0 +1,15 @@
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: csrf-demo-nginx
+    volumes:
+      - ./nginx-configs/certs:/etc/nginx/certs:ro
+      - ./nginx-configs/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx-configs/sites-enabled:/etc/nginx/sites-enabled:ro
+      - ./attacker-site:/usr/share/nginx/html/attacker-site:ro
+    ports:
+      - "80:80" # HTTP
+      - "443:443" # HTTPS
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
