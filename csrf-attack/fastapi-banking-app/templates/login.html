@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Login - CSRF Vulnerable App{% endblock %}
+
+{% block header %}Login{% endblock %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 0 auto;">
+    <div class="info">
+        <strong>Demo Accounts:</strong><br>
+        Username: alice, Password: alice123 (Balance: $1000)<br>
+        Username: bob, Password: bob123 (Balance: $500)<br>
+        Username: attacker, Password: attacker123 (Balance: $100)
+    </div>
+    {% if message %}
+    <div class="message {{ message_class }}">{{ message }}</div>
+    {% endif %}
+    <form method="post" style="background-color: #f0f0f0; padding: 30px; border-radius: 10px;">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+
+        <input type="submit" value="Login">
+    </form>
+</div>
+{% endblock %}

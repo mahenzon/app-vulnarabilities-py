@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}CSRF Vulnerable App{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .header { background-color: #f0f0f0; padding: 20px; margin-bottom: 20px; border-radius: 5px; }
+        .message { padding: 10px; margin: 10px 0; border-radius: 3px; }
+        .error { background-color: #ffdddd; border: 1px solid #ff0000; }
+        .success { background-color: #ddffdd; border: 1px solid #00ff00; }
+        .info { background-color: #e7f3ff; border: 1px solid #2196F3; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .warning { background-color: #fff3cd; border: 1px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        form { margin: 20px 0; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; margin-top: 5px; }
+        button, input[type="submit"] {
+            background-color: #4CAF50; color: white; padding: 10px 20px;
+            border: none; cursor: pointer; margin-top: 10px;
+        }
+        button:hover, input[type="submit"]:hover { background-color: #45a049; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        .logout { background-color: #f44336; }
+        .logout:hover { background-color: #da190b; }
+        .balance { font-size: 1.2em; font-weight: bold; color: #4CAF50; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{% block header %}CSRF Vulnerable Payment System{% endblock %}</h1>
+        {% if user %}
+        <p>Logged in as: <strong>{{ user.username }}</strong> |
+           Balance: <span class="balance">${{ "%.2f"|format(user.balance) }}</span></p>
+        <a href="/logout"><button class="logout">Logout</button></a>
+        {% endif %}
+    </div>
+    {% block content %}{% endblock %}
+</body>
+</html>

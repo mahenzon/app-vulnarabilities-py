@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Send Money - CSRF Vulnerable App{% endblock %}
+
+{% block header %}Send Money{% endblock %}
+
+{% block content %}
+<div class="warning">
+    <strong>⚠️ WARNING:</strong> This form is VULNERABLE to CSRF attacks!
+    It does not include any CSRF token validation.
+</div>
+
+{% if message %}
+<div class="message {{ message_class }}">{{ message }}</div>
+{% endif %}
+
+<h2>Send Money to Another User</h2>
+<form method="post" action="/send">
+    <label for="amount">Amount:</label>
+    <input type="number" name="amount" id="amount" value="0" step="0.01" required>
+
+    <label for="to_user_id">To user:</label>
+    <select name="to_user_id" id="to_user_id" required>
+        {% for recipient in users %}
+        <option value="{{ recipient.id }}">{{ recipient.username }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="submit" value="Send Payment">
+</form>
+
+<p><a href="/"><button style="background-color: #808080;">Back to Payments</button></a></p>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Payments - CSRF Vulnerable App{% endblock %}
+
+{% block content %}
+<h2>Your Payments</h2>
+<p><a href="/send"><button>Send Money</button></a></p>
+
+{% if payments %}
+<table>
+    <tr>
+        <th>Date</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Amount</th>
+    </tr>
+    {% for payment in payments %}
+    <tr>
+        <td>{{ payment.created_at }}</td>
+        <td>{{ payment.from_username }}</td>
+        <td>{{ payment.to_username }}</td>
+        <td>${{ "%.2f"|format(payment.amount) }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No payments yet.</p>
+{% endif %}
+{% endblock %}
