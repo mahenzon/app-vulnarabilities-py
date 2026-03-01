@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}SQL Injection Demo{% endblock %}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .search-form {
+      background: #f0f0f0;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+
+    input, select {
+      margin: 5px;
+      padding: 5px;
+    }
+
+    .article {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+
+    .article h3 {
+      margin-top: 0;
+    }
+
+    code {
+      background: #ffe0e0;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+
+    {% block extra_style %}{% endblock %}
+  </style>
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
+</html>

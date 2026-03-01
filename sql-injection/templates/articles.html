@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Articles - SQL Injection Demo{% endblock %}
+
+{% block content %}
+  <h1>Articles List (SQL Injection Vulnerable)</h1>
+
+  <div class="search-form">
+    <form method="GET">
+      <label for="search-title">Search by title:</label>
+      <input
+        id="search-title"
+        type="text"
+        name="title"
+        value="{{ search_title }}"
+        placeholder="Enter title"
+      >
+
+      <label for="select-order">Order by:</label>
+      <select id="select-order" name="order">
+        <option value="DESC" {% if order_by == 'DESC' %}selected{% endif %}>Created DESC</option>
+        <option value="ASC" {% if order_by == 'ASC' %}selected{% endif %}>Created ASC</option>
+      </select>
+
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <h2>Results:</h2>
+  {% if articles %}
+    {% for article in articles %}
+      <div class="article">
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.content }}</p>
+        <small>Created: {{ article.created_at }}</small>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No articles found</p>
+  {% endif %}
+
+  <hr>
+  <h3>Try SQL Injection:</h3>
+  <p>Example payloads:</p>
+  <ul>
+    <li>Title: <code>' OR '1'='1</code></li>
+    <li>Order: <code>DESC; DROP TABLE article--</code></li>
+    <li>Order: <code>DESC LIMIT 1--</code></li>
+  </ul>
+{% endblock %}
