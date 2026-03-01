@@ -2,13 +2,18 @@
 name = "web-apps-vulnarabilities-py"
 version = "0.1.0"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "xss-attack",
+]
 
 [tool.uv.workspace]
 members = [
     "hello-world",
     "xss-attack",
 ]
+
+[tool.uv.sources]
+xss-attack = { workspace = true }
 
 [dependency-groups]
 dev = [
