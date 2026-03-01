@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post" action="{{ url_for('guestbook.add_message') }}">
+    <label for="message">Message</label>
+    <textarea name="message" id="message" required></textarea>
+    <button type="submit">Submit</button>
+</form>
+<p><a href="{{ url_for('guestbook.index') }}">Back to guestbook</a></p>
+{% endblock %}
