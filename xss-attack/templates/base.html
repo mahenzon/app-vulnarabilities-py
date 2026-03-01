@@ -2,14 +2,105 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Guestbook{% endblock %}</title>
+    <style>
+        :root {
+            --bg: #f5f2ee;
+            --surface: #fff;
+            --text: #2d2a26;
+            --text-muted: #6b6560;
+            --accent: #4a7c59;
+            --accent-hover: #3d6a4a;
+            --border: #e5e0db;
+            --radius: 8px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+        }
+        main {
+            padding: 2rem 0 3rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        .card h2 { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 600; color: var(--text-muted); }
+        .card p { margin: 0 0 0.5rem; }
+        .card small { font-size: 0.875rem; color: var(--text-muted); }
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff !important;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none !important;
+        }
+        .btn:hover { background: var(--accent-hover); text-decoration: none; }
+        label { display: block; font-weight: 500; margin-bottom: 0.35rem; }
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+        }
+        textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(74,124,89,0.2); }
+        .form-actions { margin-top: 1rem; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+        .nav-link { margin-top: 1.5rem; }
+    </style>
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
     <header>
-        <h1>Guestbook</h1>
+        <div class="container">
+            <h1>Guestbook</h1>
+        </div>
     </header>
     <main>
-        {% block content %}{% endblock %}
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
     </main>
 </body>
 </html>
