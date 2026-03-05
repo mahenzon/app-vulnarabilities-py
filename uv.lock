@@ -202,7 +202,7 @@ wheels = [
 [[package]]
 name = "sql-injection"
 version = "0.1.0"
-source = { virtual = "sql-injection" }
+source = { editable = "sql-injection" }
 
 [[package]]
 name = "virtualenv"
@@ -222,6 +222,9 @@ wheels = [
 name = "web-apps-vulnarabilities-py"
 version = "0.1.0"
 source = { virtual = "." }
+dependencies = [
+    { name = "sql-injection" },
+]
 
 [package.dev-dependencies]
 dev = [
@@ -230,6 +233,7 @@ dev = [
 ]
 
 [package.metadata]
+requires-dist = [{ name = "sql-injection", editable = "sql-injection" }]
 
 [package.metadata.requires-dev]
 dev = [

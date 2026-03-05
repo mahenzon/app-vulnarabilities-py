@@ -2,13 +2,18 @@
 name = "web-apps-vulnarabilities-py"
 version = "0.1.0"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "sql-injection",
+]
 
 [tool.uv.workspace]
 members = [
     "hello-world",
     "sql-injection",
 ]
+
+[tool.uv.sources]
+sql-injection = { workspace = true }
 
 [dependency-groups]
 dev = [
