@@ -5,17 +5,14 @@
 {% block header %}Send Money{% endblock %}
 
 {% block content %}
-<div class="warning">
-    <strong>⚠️ WARNING:</strong> This form is VULNERABLE to CSRF attacks!
-    It does not include any CSRF token validation.
-</div>
-
 {% if message %}
 <div class="message {{ message_class }}">{{ message }}</div>
 {% endif %}
 
 <h2>Send Money to Another User</h2>
 <form method="post" action="/send">
+    <input type="hidden" name="csrf_secret_token" value="{{ csrf_token }}">
+
     <label for="amount">Amount:</label>
     <input type="number" name="amount" id="amount" value="0" step="0.01" required>
 

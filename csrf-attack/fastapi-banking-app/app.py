@@ -156,6 +156,7 @@ def home(request: Request, user: UserRequired):
 def render_send_money_view(
     request: Request,
     user: User,
+    csrf_token: str,
     message: str = "",
     message_class: str = "",
 ) -> HTMLResponse:
@@ -180,6 +181,7 @@ def render_send_money_view(
         context={
             "request": request,
             "user": user,
+            "csrf_token": csrf_token,
             "users": users,
             "message": message,
             "message_class": message_class,
@@ -191,23 +193,32 @@ def render_send_money_view(
 def send_money_get(
     request: Request,
     user: UserRequired,
+    csrf_protect: CsrfProtect = Depends(),
 ):
-    return render_send_money_view(
+    csrf_token, signed_token = csrf_protect.generate_csrf_tokens()
+    response = render_send_money_view(
         request=request,
         user=user,
+        csrf_token=csrf_token,
     )
+    csrf_protect.set_csrf_cookie(signed_token, response)
+    return response
 
 
 @app.post("/send")
-def send_money_post(
+async def send_money_post(
     request: Request,
     user: UserRequired,
     payment_data: PaymentForm = Form(),
+    csrf_protect: CsrfProtect = Depends(),
 ):
     """
     VULNERABLE ENDPOINT - No CSRF protection!
     This endpoint accepts POST requests without any CSRF token validation.
     """
+    csrf_token, signed_token = csrf_protect.generate_csrf_tokens()
+    await csrf_protect.validate_csrf(request)
+
     # Validate business rules
     if user.balance < payment_data.amount:
         message = "Not enough money on balance"
@@ -245,12 +256,19 @@ def send_money_post(
         message_class = "success"
 
     # Show error message on form
-    return render_send_money_view(
+    response = render_send_money_view(
         request=request,
         user=user,
+        csrf_token=csrf_token,
         message=message,
         message_class=message_class,
     )
+
+    # если бы не переустанавливали заново, надо было бы удалить
+    # csrf_protect.unset_csrf_cookie(response)
+
+    csrf_protect.set_csrf_cookie(signed_token, response)
+    return response
 
 
 @app.get(
@@ -297,7 +315,8 @@ def login_post(request: Request, login_data: LoginForm = Form()):
             httponly=True,
             # secure=False,
             secure=True,
-            samesite="none",
+            samesite="lax",
+            # samesite="none",
         )
         return response
     else:
