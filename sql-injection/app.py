@@ -40,16 +40,17 @@ def articles_list_get(
     request: Request,
     db: GetDb,
     title: str = "",
-    order: str = "DESC",
+    order: Literal["ASC", "DESC"] = "DESC",
 ):
     # VULNERABLE CODE - SQL Injection here!
+
+    ordering = f"ORDER BY created_at {order}"
     if title:
-        query = f"SELECT * FROM articles WHERE title LIKE '%{title}%' ORDER BY created_at {order}"
-        articles = db.execute(query).fetchall()
+        query = "SELECT * FROM articles WHERE title LIKE ? " + ordering
+        params = (f"%{title}%",)
+        articles = db.execute(query, params).fetchall()
     else:
-        articles = db.execute(
-            f"SELECT * FROM articles ORDER BY created_at {order};"
-        ).fetchall()
+        articles = db.execute("SELECT * FROM articles " + ordering).fetchall()
 
     return templates.TemplateResponse(
         "articles.html",
