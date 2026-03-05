@@ -8,14 +8,34 @@ The /send endpoint does not have CSRF protection, making it vulnerable to CSRF a
 import secrets
 from datetime import datetime
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 
-from fastapi import FastAPI, Request, Form, Depends, HTTPException, status
+from fastapi import FastAPI, Request, Form, Depends, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
+from fastapi_csrf_protect import CsrfProtect
+from fastapi_csrf_protect.exceptions import CsrfProtectError
+from pydantic_settings import BaseSettings
+from starlette.responses import JSONResponse
+
 from models import User, PaymentForm, LoginForm, Payment, UserInfo
 from db import get_db
+
+
+class CsrfSettings(BaseSettings):
+    secret_key: str = "Jij30i4qmWhOGnSxNvbKb4cPFpsDsIOKk8bKt_oHXgo"
+    cookie_secure: bool = True
+    # cookie_samesite: str = "none"
+    cookie_samesite: str = "lax"
+    token_location: Literal["body", "header"] = "body"
+    token_key: str = "csrf_secret_token"
+
+
+@CsrfProtect.load_config
+def get_csrf_config():
+    return CsrfSettings()
+
 
 # FastAPI app
 app = FastAPI(title="CSRF Vulnerable Payment System")
@@ -26,6 +46,14 @@ templates = Jinja2Templates(directory=Path(__file__).parent / "templates")
 
 # Session management (simple cookie-based for demo purposes)
 SESSIONS = {}
+
+
+@app.exception_handler(CsrfProtectError)
+def csrf_protect_exception_handler(request: Request, exc: CsrfProtectError):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.message},
+    )
 
 
 def get_current_user(request: Request) -> User | None:
