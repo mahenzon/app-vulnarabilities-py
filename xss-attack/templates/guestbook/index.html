@@ -3,7 +3,7 @@
 {% for message in messages_for_render %}
 <div class="card">
     <h2>Message #{{ message.number }}</h2>
-    <p>{{ message.text | safe }}</p>
+    <p>{{ message.text | highlight_guestbook }}</p>
     <small>Created at {{ message.created_at }}</small>
 </div>
 {% endfor %}

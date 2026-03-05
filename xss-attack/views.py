@@ -13,9 +13,6 @@ router = APIRouter(
 )
 
 
-REPLACE_GUESTBOOK = re.compile("(guestbook)", re.IGNORECASE)
-
-
 @router.get("/", name="guestbook.index")
 def index(
     request: Request,
@@ -27,11 +24,10 @@ def index(
     messages_for_render = []
     current_number = len(rows)
     for row in rows:
-        text = REPLACE_GUESTBOOK.sub(r"<b>\1</b>", row["message"])
         messages_for_render.append(
             {
                 "number": current_number,
-                "text": text,
+                "text": row["message"],
                 "created_at": row["created_at"],
             }
         )
