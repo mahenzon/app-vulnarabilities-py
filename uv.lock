@@ -103,7 +103,7 @@ wheels = [
 [[package]]
 name = "csrf-attack"
 version = "0.1.0"
-source = { virtual = "csrf-attack" }
+source = { editable = "csrf-attack" }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "jinja2" },
@@ -861,6 +861,9 @@ wheels = [
 name = "web-apps-vulnarabilities-py"
 version = "0.1.0"
 source = { virtual = "." }
+dependencies = [
+    { name = "csrf-attack" },
+]
 
 [package.dev-dependencies]
 dev = [
@@ -869,6 +872,7 @@ dev = [
 ]
 
 [package.metadata]
+requires-dist = [{ name = "csrf-attack", editable = "csrf-attack" }]
 
 [package.metadata.requires-dev]
 dev = [
