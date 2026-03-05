@@ -2,13 +2,18 @@
 name = "web-apps-vulnarabilities-py"
 version = "0.1.0"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "csrf-attack",
+]
 
 [tool.uv.workspace]
 members = [
     "hello-world",
     "csrf-attack",
 ]
+
+[tool.uv.sources]
+csrf-attack = { workspace = true }
 
 [dependency-groups]
 dev = [
